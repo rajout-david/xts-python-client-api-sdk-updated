@@ -18,6 +18,7 @@ xt_market = XTSConnect(API_KEY, API_SECRET, source)
 market_res = xt_market.marketdata_login()
 
 
+
 def store_all_instrument_data():
     exchange_segment = [xt_market.EXCHANGE_NSEFO]
     master_response = xt_market.get_master(exchangeSegmentList=exchange_segment)
@@ -108,7 +109,7 @@ def get_ltp(tradingsymbol):
     # Response parse kar
     if response.get("type") == "success":
         list_quotes = response.get("result", {}).get("listQuotes", [])
-        print(list_quotes)
+        return list_quotes
        
     else:
         print(f"✗ API failed: {response.get('description', 'Unknown error')}")
@@ -117,7 +118,6 @@ def get_ltp(tradingsymbol):
 
 
 if __name__ == '__main__':
-    # ltp_dict = get_ltp(tradingsymbol="")
-    # print(ltp_dict)
-    pass
-
+    ltp_dict = get_ltp(tradingsymbol="BANKNIFTY26JAN64000CE")
+    ltp = json.loads(ltp_dict[0])["LastTradedPrice"]
+    print(type(ltp))

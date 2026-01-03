@@ -109,7 +109,8 @@ def get_ltp(tradingsymbol):
     # Response parse kar
     if response.get("type") == "success":
         list_quotes = response.get("result", {}).get("listQuotes", [])
-        return list_quotes
+        ltp = json.loads(list_quotes[0])["LastTradedPrice"]
+        return ltp
        
     else:
         print(f"✗ API failed: {response.get('description', 'Unknown error')}")
@@ -118,6 +119,5 @@ def get_ltp(tradingsymbol):
 
 
 if __name__ == '__main__':
-    ltp_dict = get_ltp(tradingsymbol="BANKNIFTY26JAN64000CE")
-    ltp = json.loads(ltp_dict[0])["LastTradedPrice"]
-    print(type(ltp))
+    ltp = get_ltp(tradingsymbol="BANKNIFTY26JAN64000CE")
+    print(ltp)
